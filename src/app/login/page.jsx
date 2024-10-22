@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const LoginPage = () => {
     const router = useRouter();
-    const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem('accessToken')) || "");
+    const [isLogin, setIsLogin] = useState(JSON.parse(window.localstorage.getItem('accessToken')) || "");
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
@@ -28,8 +28,8 @@ const LoginPage = () => {
             .then(response => {
 
                 if (response.data.isSuccess) {
-                    localStorage.setItem('accessToken', JSON.stringify(response.data.token))
-                    localStorage.setItem('accessRoute', JSON.stringify(response.data.menuAccess))
+                    window.localstorage.setItem('accessToken', JSON.stringify(response.data.token))
+                    window.localstorage.setItem('accessRoute', JSON.stringify(response.data.menuAccess))
                     router.push('/');
                     const success = () => {
                         messageApi.open({

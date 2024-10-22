@@ -23,7 +23,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     }, [])
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken')
+        const token = window.localstorage.getItem('accessToken')
         const decoded = jwtDecode(token);
         if (decoded) {
             setIsSuperAdmin(decoded.isSuperAdmin)
@@ -37,12 +37,12 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     }
 
     useEffect(() => {
-        localStorage.setItem('productId', isActiveProduct)
+        window.localstorage.setItem('productId', isActiveProduct)
     }, [isActiveProduct, product])
 
     const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('accessRoute');
+        window.localstorage.removeItem('accessToken');
+        window.localstorage.removeItem('accessRoute');
         router.push('/login')
     }
 

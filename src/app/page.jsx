@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoutes";
 const Home = () => {
   const router = useRouter();
   useEffect(() => {
-    const menu = JSON.parse(localStorage.getItem('accessRoute'))
+    const menu = JSON.parse(window.localstorage.getItem('accessRoute'))
 
     if (menu) {
       if (menu[0] === "company") {

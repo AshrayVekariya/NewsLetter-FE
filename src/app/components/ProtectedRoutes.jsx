@@ -9,7 +9,7 @@ import LayoutComponent from '../../layout/Layout';
 
 const ProtectedRoute = ({ children }) => {
     const router = useRouter();
-    const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem('accessToken')) || "");
+    const [isLogin, setIsLogin] = useState(JSON.parse(window.localstorage.getItem('accessToken')) || "");
 
     useEffect(() => {
         if (!isLogin) {

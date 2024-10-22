@@ -59,7 +59,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     const [selectedKey, setSelectedKey] = useState('1');
 
     useEffect(() => {
-        const menu = localStorage.getItem('accessRoute');
+        const menu = window.localstorage.getItem('accessRoute');
         const filterMenu = items.filter((i) => menu?.includes(i.accessKey));
         setNavMenu(filterMenu);
 

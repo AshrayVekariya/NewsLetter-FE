@@ -1,7 +1,7 @@
 import axios from './../../axios/interceptor';
 
-const bearerToken = JSON.parse(localStorage.getItem('accessToken'));
-const product = localStorage.getItem('productId')
+const bearerToken = JSON.parse(window.localstorage.getItem('accessToken'));
+const product = window.localstorage.getItem('productId')
 
 const headers = {
     Authorization: `Bearer ${bearerToken}`
