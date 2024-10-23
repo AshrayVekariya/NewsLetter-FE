@@ -5,13 +5,15 @@ import React from "react";
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 
-import dynamic from "next/dynamic";
-
-// ckedior
-const { CKEditor }  = dynamic(() => import('@ckeditor/ckeditor5-react') , {ssr : false})
-const ClassicEditor = dynamic(() => import('@ckeditor/ckeditor5-build-classic') , {ssr : false})
-
 const NewsLetterForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFile, form, fileProps, editId, productList, textEditor, setTextEditor }) => {
+    const editorRef = useRef();
+    const { CKEditor, ClassicEditor } = editorRef.current || {};
+    useEffect(() => {
+        editorRef.current = {
+            CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
+            ClassicEditor: require("@ckeditor/ckeditor5-build-classic")
+        };
+    }, []);
     return (
         <Modal title={editId ? "Update Product" : "Add News Letter"} maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <div className="py-5">

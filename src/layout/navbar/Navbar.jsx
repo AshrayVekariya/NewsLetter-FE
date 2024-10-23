@@ -51,6 +51,15 @@ const Navbar = ({ collapsed, setCollapsed }) => {
         setIsActiveProduct(e)
     }
 
+    const copyProduct = async () => {
+        try {
+            await navigator.clipboard.writeText(isActiveProduct);
+            console.log('Content copied to clipboard');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+
     return (
         <Fragment>
             <div className='flex justify-between px-5 overflow-hidden overflow-x-auto'>
@@ -67,6 +76,15 @@ const Navbar = ({ collapsed, setCollapsed }) => {
                     />
                 </div>
                 <div className='flex ml-auto'>
+                    {
+                        !isSuperAdmin && (
+                            <div className="px-5 border-r-2 border-gray-200">
+                                <div className="px-5">
+                                    <Button type="primary" onClick={copyProduct}>Copy Product</Button>
+                                </div>
+                            </div>
+                        )
+                    }
                     <div className="border-r-2 border-gray-200 px-5">
                         <Badge count={0} size="small" showZero>
                             <BellOutlined className="text-xl" />
