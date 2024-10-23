@@ -15,9 +15,12 @@ const Home = () => {
       menu = JSON.parse(menu)
       router.push(`/${menu[0]}`);
     }
+    else{
+      router.push("/login")
+    }
   }, []);
   return (
-    <></>
+    <div>Vision Infotech</div>
   );
 }
 
