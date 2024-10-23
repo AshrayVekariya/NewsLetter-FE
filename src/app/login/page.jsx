@@ -11,7 +11,7 @@ import axios from "../../axios/interceptor";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 const LoginPage = () => {
     const router = useRouter();
@@ -25,13 +25,19 @@ const LoginPage = () => {
                     setCookie('accessToken', response.data.token);
                     const menuAccess = JSON.stringify(response.data.menuAccess)
                     setCookie('accessRoute', menuAccess);
-                    router.push('/');
+
+
                     const success = () => {
                         messageApi.open({
                             type: 'success',
                             content: response.data.message,
                         });
                     };
+                    let menu = getCookie('accessRoute');
+                    if (menu) {
+                        menu = JSON.parse(menu)
+                        router.push(`/${menu[0]}`);
+                    }
                     success()
                 } else {
                     const success = () => {

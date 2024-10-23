@@ -8,6 +8,7 @@ import { Table } from "antd";
 import ProtectedRoute from "../components/ProtectedRoutes";
 import { getAllSubscriber } from "../../services/subscriber/subscriberService";
 import { getAllProducts } from "../../services/products/productsServices";
+import { getCookie } from "cookies-next";
 
 const NewsLetter = () => {
     const [subscriberList, setSubscriberList] = useState([])
@@ -17,13 +18,11 @@ const NewsLetter = () => {
     useEffect(() => {
         getSubscriber();
         getProduct();
-    }, [])
+    }, [productId])
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            setProductId(localStorage.getItem('productId'))
-        }
-    }, [])
+        setProductId(getCookie('productId'))
+    }, [getCookie('productId')])
 
     const getSubscriber = async () => {
         const response = await getAllSubscriber(productId);
@@ -51,7 +50,7 @@ const NewsLetter = () => {
             dataIndex: 'emails',
             key: 'emails',
             render: (text) => <div>{
-                text.map((emails, index) => {
+                text?.map((emails, index) => {
                     return (
                         <p key={index}>{emails}</p>
                     )

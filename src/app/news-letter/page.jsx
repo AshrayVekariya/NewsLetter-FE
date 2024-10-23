@@ -10,6 +10,7 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import NewsLetterForm from "./form/NewsLetterForm";
 import { getAllProducts } from "../../services/products/productsServices";
 import { createNewsLetter, deleteNewsLetter, getAllnewsLetter, getNewsLetterById, updateNewsLetter } from "../../services/newsLetter/newsLetterServices";
+import { getCookie } from "cookies-next";
 
 const NewsLetterPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,15 +29,13 @@ const NewsLetterPage = () => {
     };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            setProductId(localStorage.getItem('productId'))
-        }
-    }, [])
+        setProductId(getCookie('productId'))
+    }, [getCookie('productId')])
 
     useEffect(() => {
         getProducts();
         getNewsLetters();
-    }, [])
+    }, [productId])
 
     const getProducts = async () => {
         const response = await getAllProducts();

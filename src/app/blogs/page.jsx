@@ -10,6 +10,7 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import BlogsForm from "./form/BlogsForm";
 import { getAllProducts } from "../../services/products/productsServices";
 import { createBlogs, deleteBlogs, getAllBlogs, getBlogsById, updateBlogs } from "../../services/blogs/blogService";
+import { getCookie } from "cookies-next";
 
 const Blogs = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,15 +29,13 @@ const Blogs = () => {
     };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            setProductId(localStorage.getItem('productId'))
-        }
-    }, [])
+        setProductId(getCookie('productId'))
+    }, [getCookie('productId')])
 
     useEffect(() => {
         getProducts();
         getBlogs();
-    }, [])
+    }, [productId])
 
     const getProducts = async () => {
         const response = await getAllProducts();
@@ -70,7 +69,7 @@ const Blogs = () => {
             formData.append('description', textEditor);
             formData.append('product', values.product);
             if (values.upload) {
-                formData.append('image', values.upload[0].originFileObj);
+                formData.append('thumbnail', values.upload[0].originFileObj);
             }
 
             if (editId !== null) {

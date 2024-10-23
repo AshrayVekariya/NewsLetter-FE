@@ -11,7 +11,7 @@ import { Badge, Button, Select, } from "antd";
 import { useRouter } from "next/navigation";
 import { getAllProducts } from "../../services/products/productsServices";
 import { jwtDecode } from "jwt-decode";
-import { deleteCookie, getCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const Navbar = ({ collapsed, setCollapsed }) => {
     const router = useRouter();
@@ -38,9 +38,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     }
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            localStorage.setItem('productId', isActiveProduct)
-        }
+        setCookie('productId', isActiveProduct)
     }, [isActiveProduct, product])
 
     const handleLogout = () => {
