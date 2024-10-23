@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export function middleware(req) {
     const { pathname } = req.nextUrl;
 
-    const protectedRoutes = ['/companies', '/products', '/blogs', '/news-letter', '/subscriber'];
+    const protectedRoutes = ['/companies', '/products', '/blogs', '/news-letter', '/subscriber', '/'];
     const publicRoutes = ['/login', '/forgotPassword']
 
     const isAuthenticated = req.cookies.get('accessToken');
