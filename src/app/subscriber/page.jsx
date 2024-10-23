@@ -12,14 +12,21 @@ import { getAllProducts } from "../../services/products/productsServices";
 const NewsLetter = () => {
     const [subscriberList, setSubscriberList] = useState([])
     const [productList, setProductList] = useState([])
+    const [productId, setProductId] = useState('')
 
     useEffect(() => {
         getSubscriber();
         getProduct();
     }, [])
 
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setProductId(localStorage.getItem('productId'))
+        }
+    }, [])
+
     const getSubscriber = async () => {
-        const response = await getAllSubscriber();
+        const response = await getAllSubscriber(productId);
         setSubscriberList([response])
     }
 

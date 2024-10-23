@@ -3,25 +3,20 @@ import React, { useEffect } from "react";
 
 // Next JS Hooks and Components
 import { useRouter } from 'next/navigation';
-import ProtectedRoute from "./components/ProtectedRoutes";
+import { getCookie } from "cookies-next";
 
 const Home = () => {
   const router = useRouter();
+
   useEffect(() => {
-    const menu = JSON.parse(window.localstorage.getItem('accessRoute'))
+    const menu = JSON.parse(getCookie('accessRoute'));
 
     if (menu) {
-      if (menu[0] === "company") {
-        router.push('/companies');
-      } else {
-        router.push('/news-letter');
-      }
+      router.push(`/${menu[0]}`);
     }
   }, []);
   return (
-    <ProtectedRoute>
-      <></>
-    </ProtectedRoute>
+    <></>
   );
 }
 

@@ -8,19 +8,22 @@ import {
     ProductOutlined,
     VideoCameraOutlined,
     ProjectFilled,
+    SnippetsOutlined,
+    PaperClipOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from "antd";
 
 // Next JS and Component 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 const items = [
     {
         key: '1',
         icon: <ProjectFilled />,
         label: 'Companies',
-        accessKey: "company",
+        accessKey: "companies",
         path: '/companies'
     },
     {
@@ -32,9 +35,9 @@ const items = [
     },
     {
         key: '3',
-        icon: <VideoCameraOutlined />,
+        icon: <SnippetsOutlined />,
         label: 'News Letter',
-        accessKey: "newsletter",
+        accessKey: "news-letter",
         path: '/news-letter'
     },
     {
@@ -46,7 +49,7 @@ const items = [
     },
     {
         key: '5',
-        icon: <VideoCameraOutlined />,
+        icon: <PaperClipOutlined />,
         label: 'Subscriber',
         accessKey: "subscriber",
         path: '/subscriber'
@@ -59,7 +62,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     const [selectedKey, setSelectedKey] = useState('1');
 
     useEffect(() => {
-        const menu = window.localstorage.getItem('accessRoute');
+        const menu = JSON.parse(getCookie('accessRoute'));
         const filterMenu = items.filter((i) => menu?.includes(i.accessKey));
         setNavMenu(filterMenu);
 

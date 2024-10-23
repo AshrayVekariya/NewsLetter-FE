@@ -1,15 +1,9 @@
 import axios from './../../axios/interceptor';
 
-const bearerToken = JSON.parse(window.localstorage.getItem('accessToken'));
-
-const headers = {
-    Authorization: `Bearer ${bearerToken}`
-}
-
 // Get All Product
 export const getAllProducts = async () => {
     try {
-        const res = await axios.get('product/get', { headers })
+        const res = await axios.get('product/get')
         return res.data.data
     } catch (err) {
         console.log(err);
@@ -19,7 +13,7 @@ export const getAllProducts = async () => {
 // Add Product
 export const createProduct = async (payload) => {
     try {
-        const res = await axios.post(`product/add`, payload, { headers })
+        const res = await axios.post(`product/add`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -29,7 +23,7 @@ export const createProduct = async (payload) => {
 // Get Product By ID
 export const getProductById = async (id, company) => {
     try {
-        const res = await axios.get(`product/getById`, { params: { id, company }, headers })
+        const res = await axios.get(`product/getById`, { params: { id, company } })
         return res.data
     } catch (error) {
         console.log(error)
@@ -39,7 +33,7 @@ export const getProductById = async (id, company) => {
 // Update Product
 export const updateProduct = async (payload) => {
     try {
-        const res = await axios.put(`product/update`, payload, { headers })
+        const res = await axios.put(`product/update`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -50,7 +44,7 @@ export const updateProduct = async (payload) => {
 // Delete Product
 export const deleteProduct = async (id) => {
     try {
-        const res = await axios.delete(`product/delete`, { params: { id }, headers })
+        const res = await axios.delete(`product/delete`, { params: { id } })
         return res.data
     } catch (error) {
         console.log(error)

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useEffect, useState } from "react";
 
 // Antd
@@ -11,13 +11,14 @@ import BlogsForm from "./form/BlogsForm";
 import { getAllProducts } from "../../services/products/productsServices";
 import { createBlogs, deleteBlogs, getAllBlogs, getBlogsById, updateBlogs } from "../../services/blogs/blogService";
 
-const NewsLetter = () => {
+const Blogs = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [productList, setProductList] = useState([])
     const [newsLetterList, setNewsLetter] = useState([])
     const [messageApi, contextHolder] = message.useMessage();
     const [editId, setEditId] = useState(null);
     const [textEditor, setTextEditor] = useState('');
+    const [productId, setProductId] = useState('');
 
     const toast = (type, toastMessage) => {
         messageApi.open({
@@ -25,6 +26,12 @@ const NewsLetter = () => {
             content: toastMessage,
         });
     };
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setProductId(localStorage.getItem('productId'))
+        }
+    }, [])
 
     useEffect(() => {
         getProducts();
@@ -37,7 +44,7 @@ const NewsLetter = () => {
     }
 
     const getBlogs = async () => {
-        const response = await getAllBlogs();
+        const response = await getAllBlogs(productId);
         setNewsLetter(response)
     }
 
@@ -222,4 +229,4 @@ const NewsLetter = () => {
     )
 }
 
-export default NewsLetter;
+export default Blogs;

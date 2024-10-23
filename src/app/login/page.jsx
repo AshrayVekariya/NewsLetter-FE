@@ -11,25 +11,20 @@ import axios from "../../axios/interceptor";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import { setCookie } from 'cookies-next';
 
 const LoginPage = () => {
     const router = useRouter();
-    const [isLogin, setIsLogin] = useState(JSON.parse(window.localstorage.getItem('accessToken')) || "");
     const [messageApi, contextHolder] = message.useMessage();
-
-    useEffect(() => {
-        if (isLogin) {
-            router.push('/');
-        }
-    }, [])
 
     const onFinish = (values) => {
         axios.post(`company/login`, { ...values })
             .then(response => {
 
                 if (response.data.isSuccess) {
-                    window.localstorage.setItem('accessToken', JSON.stringify(response.data.token))
-                    window.localstorage.setItem('accessRoute', JSON.stringify(response.data.menuAccess))
+                    setCookie('accessToken', response.data.token);
+                    const menuAccess = JSON.stringify(response.data.menuAccess)
+                    setCookie('accessRoute', menuAccess);
                     router.push('/');
                     const success = () => {
                         messageApi.open({

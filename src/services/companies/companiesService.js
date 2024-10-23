@@ -1,15 +1,9 @@
 import axios from './../../axios/interceptor';
 
-const bearerToken = JSON.parse(window.localstorage.getItem('accessToken'));
-
-const headers = {
-    Authorization: `Bearer ${bearerToken}`
-}
-
 // Get All Comapny
 export const getAllCompanies = async () => {
     try {
-        const res = await axios.get('company/get', { headers })
+        const res = await axios.get('company/get')
         return res.data.data
     } catch (err) {
         console.log(err);
@@ -19,7 +13,7 @@ export const getAllCompanies = async () => {
 // Add Comapny
 export const createCompany = async (payload) => {
     try {
-        const res = await axios.post(`company/add`, payload, { headers })
+        const res = await axios.post(`company/add`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -29,7 +23,7 @@ export const createCompany = async (payload) => {
 // Get Comapny By ID
 export const getCompanyById = async (id) => {
     try {
-        const res = await axios.get(`company/getById`, { params: { id }, headers })
+        const res = await axios.get(`company/getById`, { params: { id } })
         return res.data
     } catch (error) {
         console.log(error)
@@ -39,7 +33,7 @@ export const getCompanyById = async (id) => {
 // Update Company
 export const updateCompany = async (payload) => {
     try {
-        const res = await axios.put(`company/update`, payload, { headers })
+        const res = await axios.put(`company/update`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -50,7 +44,7 @@ export const updateCompany = async (payload) => {
 // Delete Compant
 export const deleteCompany = async (id) => {
     try {
-        const res = await axios.delete(`company/delete`, { params: { id }, headers })
+        const res = await axios.delete(`company/delete`, { params: { id } })
         return res.data
     } catch (error) {
         console.log(error)

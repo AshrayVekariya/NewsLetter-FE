@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useEffect, useState } from "react";
 
 // Antd
@@ -11,13 +11,14 @@ import NewsLetterForm from "./form/NewsLetterForm";
 import { getAllProducts } from "../../services/products/productsServices";
 import { createNewsLetter, deleteNewsLetter, getAllnewsLetter, getNewsLetterById, updateNewsLetter } from "../../services/newsLetter/newsLetterServices";
 
-const NewsLetter = () => {
+const NewsLetterPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [productList, setProductList] = useState([])
     const [newsLetterList, setNewsLetter] = useState([])
     const [messageApi, contextHolder] = message.useMessage();
     const [editId, setEditId] = useState(null);
-    const [textEditor, setTextEditor] = useState('')
+    const [textEditor, setTextEditor] = useState('');
+    const [productId, setProductId] = useState('');
 
     const toast = (type, toastMessage) => {
         messageApi.open({
@@ -25,6 +26,12 @@ const NewsLetter = () => {
             content: toastMessage,
         });
     };
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setProductId(localStorage.getItem('productId'))
+        }
+    }, [])
 
     useEffect(() => {
         getProducts();
@@ -37,7 +44,7 @@ const NewsLetter = () => {
     }
 
     const getNewsLetters = async () => {
-        const response = await getAllnewsLetter();
+        const response = await getAllnewsLetter(productId);
         setNewsLetter(response)
     }
 
@@ -134,12 +141,12 @@ const NewsLetter = () => {
     const handleDelete = async (id) => {
         const response = await deleteNewsLetter(id);
         if (response.isSuccess) {
-          toast('success', response.message);
-          getNewsLetters();
+            toast('success', response.message);
+            getNewsLetters();
         } else {
-          toast('error', response.message);
+            toast('error', response.message);
         }
-      }
+    }
 
     const columns = [
         {
@@ -222,4 +229,4 @@ const NewsLetter = () => {
     )
 }
 
-export default NewsLetter;
+export default NewsLetterPage;

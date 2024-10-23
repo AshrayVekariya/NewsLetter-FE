@@ -11,6 +11,7 @@ import { Badge, Button, Select, } from "antd";
 import { useRouter } from "next/navigation";
 import { getAllProducts } from "../../services/products/productsServices";
 import { jwtDecode } from "jwt-decode";
+import { deleteCookie, getCookie } from "cookies-next";
 
 const Navbar = ({ collapsed, setCollapsed }) => {
     const router = useRouter();
@@ -23,7 +24,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     }, [])
 
     useEffect(() => {
-        const token = window.localstorage.getItem('accessToken')
+        const token = getCookie('accessToken')
         const decoded = jwtDecode(token);
         if (decoded) {
             setIsSuperAdmin(decoded.isSuperAdmin)
@@ -37,12 +38,14 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     }
 
     useEffect(() => {
-        window.localstorage.setItem('productId', isActiveProduct)
+        if (typeof window !== "undefined") {
+            localStorage.setItem('productId', isActiveProduct)
+        }
     }, [isActiveProduct, product])
 
     const handleLogout = () => {
-        window.localstorage.removeItem('accessToken');
-        window.localstorage.removeItem('accessRoute');
+        deleteCookie('accessToken');
+        deleteCookie('accessRoute');
         router.push('/login')
     }
 

@@ -1,16 +1,9 @@
 import axios from './../../axios/interceptor';
 
-const bearerToken = JSON.parse(window.localstorage.getItem('accessToken'));
-const product = window.localstorage.getItem('productId')
-
-const headers = {
-    Authorization: `Bearer ${bearerToken}`
-}
-
 // Get All NewsLetter
-export const getAllnewsLetter = async () => {
+export const getAllnewsLetter = async (product) => {
     try {
-        const res = await axios.get('news-letter/get', { params: { product }, headers })
+        const res = await axios.get('news-letter/get', { params: { product } })
         return res.data.data
     } catch (err) {
         console.log(err);
@@ -20,7 +13,7 @@ export const getAllnewsLetter = async () => {
 // Add NewsLetter
 export const createNewsLetter = async (payload) => {
     try {
-        const res = await axios.post(`news-letter/add`, payload, { headers })
+        const res = await axios.post(`news-letter/add`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -31,7 +24,7 @@ export const createNewsLetter = async (payload) => {
 // Get NewsLetter By ID
 export const getNewsLetterById = async (id, product) => {
     try {
-        const res = await axios.get(`news-letter/getById`, { params: { id, product }, headers })
+        const res = await axios.get(`news-letter/getById`, { params: { id, product } })
         return res.data
     } catch (error) {
         console.log(error)
@@ -41,7 +34,7 @@ export const getNewsLetterById = async (id, product) => {
 // Update NewsLetter
 export const updateNewsLetter = async (payload) => {
     try {
-        const res = await axios.put(`news-letter/update`, payload, { headers })
+        const res = await axios.put(`news-letter/update`, payload)
         return res.data
     } catch (error) {
         console.log(error)
@@ -52,7 +45,7 @@ export const updateNewsLetter = async (payload) => {
 // Delete NewsLetter
 export const deleteNewsLetter = async (id) => {
     try {
-        const res = await axios.delete(`news-letter/delete`, { params: { id }, headers })
+        const res = await axios.delete(`news-letter/delete`, { params: { id } })
         return res.data
     } catch (error) {
         console.log(error)

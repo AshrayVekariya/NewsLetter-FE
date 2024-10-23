@@ -1,12 +1,15 @@
+'use client';
 import React from "react";
 
 // Antd
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 
+import dynamic from "next/dynamic";
+
 // ckedior
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+const { CKEditor }  = dynamic(() => import('@ckeditor/ckeditor5-react') , {ssr : false})
+const ClassicEditor = dynamic(() => import('@ckeditor/ckeditor5-build-classic') , {ssr : false})
 
 const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFile, form, fileProps, editId, productList, textEditor, setTextEditor }) => {
     return (

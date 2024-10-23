@@ -8,16 +8,23 @@ import { useRouter } from 'next/navigation';
 import LayoutComponent from '../../layout/Layout';
 
 const ProtectedRoute = ({ children }) => {
-    const router = useRouter();
-    const [isLogin, setIsLogin] = useState(JSON.parse(window.localstorage.getItem('accessToken')) || "");
+    // const router = useRouter();
+    // const [isLogin, setIsLogin] = useState('');
 
-    useEffect(() => {
-        if (!isLogin) {
-            router.push('/login');
-        }
-    }, [isLogin, router]);
+    // useEffect(() => {
+    //     if (!isLogin) {
+    //         router.push('/login');
+    //     }
+    // }, [isLogin]);
 
-    return isLogin ? <LayoutComponent>{children}</LayoutComponent> : null;
+    // useEffect(() => {
+    //     if (typeof window !== "undefined") {
+    //         setIsLogin(JSON.parse(localStorage.getItem('accessToken')) || "")
+    //     }
+    // }, [])
+
+
+    return true ? <LayoutComponent>{children}</LayoutComponent> : null;
 };
 
 export default ProtectedRoute;
