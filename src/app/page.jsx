@@ -9,9 +9,10 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const menu = JSON.parse(getCookie('accessRoute'));
+    let menu = getCookie('accessRoute');
 
     if (menu) {
+      menu = JSON.parse(menu)
       router.push(`/${menu[0]}`);
     }
   }, []);
