@@ -62,7 +62,7 @@ const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFi
                         label="Product"
                         name="product"
                         rules={[{ required: true, message: 'Product is required!' }]}>
-                        <Select>
+                        <Select placeholder="Select your product">
                             {
                                 productList?.map((product, index) => {
                                     return <Select.Option key={index} value={product._id}>{product.name}</Select.Option>
@@ -80,17 +80,25 @@ const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFi
                             },
                         ]}
                     >
-                        <Input />
+                        <Input placeholder="Enter your Blog title" />
                     </Form.Item>
 
                     <div>
-                        <span className="block">Description</span>
-                        <ReactQuill
-                            theme="snow"
-                            modules={modules}
-                            formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']}
-                            value={textEditor}
-                            onChange={setTextEditor} />
+                        <Form.Item
+                            name="description"
+                            label="Description"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Description is required!',
+                                },
+                            ]}
+                        >
+                            <ReactQuill
+                                theme="snow"
+                                modules={modules}
+                                formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']} />
+                        </Form.Item>
                     </div>
 
                 </Form>

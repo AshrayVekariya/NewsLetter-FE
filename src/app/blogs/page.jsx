@@ -19,7 +19,6 @@ const Blogs = () => {
     const [newsLetterList, setNewsLetter] = useState([])
     const [messageApi, contextHolder] = message.useMessage();
     const [editId, setEditId] = useState(null);
-    const [textEditor, setTextEditor] = useState('');
     const [blogOpen, setBlogOpen] = useState(false);
     const [blogDetail, setBlogDetail] = useState({})
     const productId = getCookie('productId')
@@ -74,7 +73,7 @@ const Blogs = () => {
 
             const formData = new FormData();
             formData.append('title', values.title);
-            formData.append('description', textEditor);
+            formData.append('description', values.description);
             formData.append('product', values.product);
             if (values.upload) {
                 formData.append('thumbnail', values.upload[0].originFileObj);
@@ -109,7 +108,6 @@ const Blogs = () => {
         form.resetFields();
         setIsModalOpen(false);
         setEditId(null);
-        setTextEditor("");
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -141,7 +139,6 @@ const Blogs = () => {
         setEditId(id)
         const response = await getBlogsById(id, product);
         form.setFieldsValue(response.data);
-        setTextEditor(response.data.description);
         setIsModalOpen(true);
     }
 
@@ -224,8 +221,6 @@ const Blogs = () => {
                 fileProps={fileProps}
                 editId={editId}
                 productList={productList}
-                textEditor={textEditor}
-                setTextEditor={setTextEditor}
             />
 
             <ViewBlog

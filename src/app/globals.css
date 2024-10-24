@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.ql-editor{
+    min-height: 200px !important;
+}
