@@ -206,7 +206,7 @@ const Blogs = () => {
                 <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>Add Blogs</Button>
             </div>
 
-            <div className="my-10 max-h-[600px] overflow-hidden overflow-y-auto sm:max-h-full">
+            <div className="my-10 max-h-[550px] overflow-hidden overflow-y-auto xl:max-h-[650px]">
                 <Table
                     columns={columns}
                     dataSource={newsLetterList}
