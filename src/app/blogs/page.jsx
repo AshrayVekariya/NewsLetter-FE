@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 // Antd
 import { Button, Form, message, Table } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 // Components
 import ProtectedRoute from "../components/ProtectedRoutes";
@@ -11,6 +11,7 @@ import BlogsForm from "./form/BlogsForm";
 import { getAllProducts } from "../../services/products/productsServices";
 import { createBlogs, deleteBlogs, getAllBlogs, getBlogsById, updateBlogs } from "../../services/blogs/blogService";
 import { getCookie } from "cookies-next";
+import ViewBlog from "./view-blog/ViewBlog";
 
 const Blogs = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,9 @@ const Blogs = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const [editId, setEditId] = useState(null);
     const [textEditor, setTextEditor] = useState('');
-    const [productId, setProductId] = useState('');
+    const [blogOpen, setBlogOpen] = useState(false);
+    const [blogDetail, setBlogDetail] = useState({})
+    const productId = getCookie('productId')
 
     const toast = (type, toastMessage) => {
         messageApi.open({
@@ -29,13 +32,9 @@ const Blogs = () => {
     };
 
     useEffect(() => {
-        setProductId(getCookie('productId'))
-    }, [getCookie('productId')])
-
-    useEffect(() => {
         getProducts();
         getBlogs();
-    }, [productId])
+    }, [])
 
     const getProducts = async () => {
         const response = await getAllProducts();
@@ -49,6 +48,15 @@ const Blogs = () => {
 
     const showModal = () => {
         setIsModalOpen(true);
+    };
+
+    const showBlogModal = (record) => {
+        setBlogOpen(true);
+        setBlogDetail(record)
+    };
+    const handleBlogCancel = () => {
+        setBlogOpen(false);
+        setBlogDetail({})
     };
 
     const [form] = Form.useForm();
@@ -149,9 +157,9 @@ const Blogs = () => {
 
     const columns = [
         {
-            title: 'Image',
-            dataIndex: 'image',
-            key: 'image',
+            title: 'Thumbnail',
+            dataIndex: 'thumbnail',
+            key: 'thumbnail',
             render: (text) => <img src={text} alt="Profile" style={{ width: 50, height: 50 }} className="rounded-full border-2 border-black-900" />,
         },
         {
@@ -170,16 +178,13 @@ const Blogs = () => {
             key: 'title',
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-            render: (text) => <div dangerouslySetInnerHTML={{ __html: text }}></div>,
-        },
-        {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <div className="flex gap-3">
+                    <span className="text-xl text-[#1677ff] cursor-pointer" onClick={() => showBlogModal(record)}>
+                        <EyeOutlined />
+                    </span>
                     <span className="text-xl text-green-500 cursor-pointer" onClick={() => handleEdit(record._id, record.product)}>
                         <EditOutlined />
                     </span>
@@ -221,6 +226,12 @@ const Blogs = () => {
                 productList={productList}
                 textEditor={textEditor}
                 setTextEditor={setTextEditor}
+            />
+
+            <ViewBlog
+                blogOpen={blogOpen}
+                handleBlogCancel={handleBlogCancel}
+                blogDetail={blogDetail}
             />
 
         </ProtectedRoute>

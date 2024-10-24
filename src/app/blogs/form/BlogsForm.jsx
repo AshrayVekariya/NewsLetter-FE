@@ -1,21 +1,30 @@
 'use client';
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 // Antd
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+const modules = {
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' },
+        { 'indent': '-1' }, { 'indent': '+1' }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ],
+    clipboard: {
+        matchVisual: false,
+    }
+};
 
 const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFile, form, fileProps, editId, productList, textEditor, setTextEditor }) => {
-    const editorRef = useRef();
-    const { CKEditor, ClassicEditor } = editorRef.current || {};
-    useEffect(() => {
-        editorRef.current = {
-            CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
-            ClassicEditor: require("@ckeditor/ckeditor5-build-classic")
-        };
-    }, []);
     return (
-        <Modal title={editId ? "Update Blog" : "Add Blog"} maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal title={editId ? "Update Blog" : "Add Blog"} width={1000} maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <div className="py-5">
                 <Form
                     name="basic"
@@ -29,7 +38,7 @@ const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFi
                 >
                     <Form.Item
                         name="upload"
-                        label="Image"
+                        label="Thumbnail"
                         valuePropName="fileList"
                         getValueFromEvent={normFile}
                         rules={editId ? [] : [
@@ -70,13 +79,12 @@ const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFi
 
                     <div>
                         <span className="block">Description</span>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            data={textEditor}
-                            onChange={(event, editor) => {
-                                setTextEditor(editor.getData())
-                            }}
-                        />
+                        <ReactQuill
+                            theme="snow"
+                            modules={modules}
+                            formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']}
+                            value={textEditor}
+                            onChange={setTextEditor} />
                     </div>
 
                 </Form>

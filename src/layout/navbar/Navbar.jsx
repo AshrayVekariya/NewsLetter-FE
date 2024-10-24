@@ -7,7 +7,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Badge, Button, Select, } from "antd";
+import { Badge, Button, message, Select, } from "antd";
 import { useRouter } from "next/navigation";
 import { getAllProducts } from "../../services/products/productsServices";
 import { jwtDecode } from "jwt-decode";
@@ -15,9 +15,17 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const Navbar = ({ collapsed, setCollapsed }) => {
     const router = useRouter();
-    const [product, setProduct] = useState([])
-    const [isActiveProduct, setIsActiveProduct] = useState("")
-    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+    const [product, setProduct] = useState([]);
+    const [isActiveProduct, setIsActiveProduct] = useState("");
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const toast = (type, toastMessage) => {
+        messageApi.open({
+            type: type,
+            content: toastMessage,
+        });
+    };
 
     useEffect(() => {
         productList();
@@ -54,6 +62,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     const copyProduct = async () => {
         try {
             await navigator.clipboard.writeText(isActiveProduct);
+            toast('success',"Product Id Successfully Copied")
             console.log('Content copied to clipboard');
         } catch (err) {
             console.error('Failed to copy: ', err);
@@ -62,6 +71,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
 
     return (
         <Fragment>
+            {contextHolder}
             <div className='flex justify-between px-5 overflow-hidden overflow-x-auto'>
                 <div className='lg:hidden'>
                     <Button
@@ -80,7 +90,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
                         !isSuperAdmin && (
                             <div className="px-5 border-r-2 border-gray-200">
                                 <div className="px-5">
-                                    <Button type="primary" onClick={copyProduct}>Copy Product</Button>
+                                    <Button type="primary" onClick={copyProduct}>Copy Product Id</Button>
                                 </div>
                             </div>
                         )
