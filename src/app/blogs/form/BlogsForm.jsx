@@ -1,10 +1,9 @@
 'use client';
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // Antd
 import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const modules = {
@@ -23,6 +22,13 @@ const modules = {
 };
 
 const BlogsForm = ({ isModalOpen, handleOk, handleCancel, onFinishFailed, normFile, form, fileProps, editId, productList, textEditor, setTextEditor }) => {
+    const editorRef = useRef();
+    const { ReactQuill } = editorRef.current || {};
+    useEffect(() => {
+        editorRef.current = {
+            ReactQuill: require("react-quill")
+        };
+    }, []);
     return (
         <Modal title={editId ? "Update Blog" : "Add Blog"} width={1000} maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <div className="py-5">
