@@ -62,7 +62,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
     const copyProduct = async () => {
         try {
             await navigator.clipboard.writeText(isActiveProduct);
-            toast('success',"Product Id Successfully Copied")
+            toast('success', "Product Id Successfully Copied")
             console.log('Content copied to clipboard');
         } catch (err) {
             console.error('Failed to copy: ', err);
@@ -88,29 +88,22 @@ const Navbar = ({ collapsed, setCollapsed }) => {
                 <div className='flex ml-auto'>
                     {
                         !isSuperAdmin && (
-                            <div className="px-5 border-r-2 border-gray-200">
-                                <div className="px-5">
-                                    <Button type="primary" onClick={copyProduct}>Copy Product Id</Button>
+                            <>
+                                <div className="border-r-2 border-gray-200">
+                                    <div className="px-5">
+                                        <Button type="primary" onClick={copyProduct}>Copy Product Id</Button>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    }
-                    <div className="border-r-2 border-gray-200 px-5">
-                        <Badge count={0} size="small" showZero>
-                            <BellOutlined className="text-xl" />
-                        </Badge>
-                    </div>
-                    {
-                        !isSuperAdmin && (
-                            <div className="px-5 w-60 border-r-2 border-gray-200">
-                                <Select style={{ width: "100%" }} onChange={handleChange} value={isActiveProduct} >
-                                    {
-                                        product?.map((productData, index) => {
-                                            return <Select.Option key={index} value={productData._id}>{productData.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </div>
+                                <div className="px-5 w-60 border-r-2 border-gray-200">
+                                    <Select style={{ width: "100%" }} onChange={handleChange} value={isActiveProduct} >
+                                        {
+                                            product?.map((productData, index) => {
+                                                return <Select.Option key={index} value={productData._id}>{productData.name}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </div>
+                            </>
                         )
                     }
                     <div className="px-5">

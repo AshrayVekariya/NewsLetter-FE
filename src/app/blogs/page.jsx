@@ -12,6 +12,8 @@ import { getAllProducts } from "../../services/products/productsServices";
 import { createBlogs, deleteBlogs, getAllBlogs, getBlogsById, updateBlogs } from "../../services/blogs/blogService";
 import { getCookie } from "cookies-next";
 import ViewBlog from "./view-blog/ViewBlog";
+import Image from "next/image";
+import moment from "moment";
 
 const Blogs = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,22 +159,28 @@ const Blogs = () => {
             title: 'Thumbnail',
             dataIndex: 'thumbnail',
             key: 'thumbnail',
-            render: (text) => <img src={text} alt="Profile" style={{ width: 50, height: 50 }} className="rounded-full border-2 border-black-900" />,
-        },
-        {
-            title: 'Product Name',
-            dataIndex: 'product',
-            key: 'product',
-            render: (text) => <div>
-                {
-                    productList.find((companyData) => companyData._id === text)?.name
-                }
-            </div>,
+            render: (text) =>
+                <div style={{ position: "relative", width: `${200}px`, height: `${100}px` }}>
+                    <Image
+                        src={text}
+                        alt="Thumbnail"
+                        fill
+                        className="border-2 border-black-900"
+                        style={{ objectFit: "cover" }}
+                    />
+                </div>
         },
         {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
+        },
+        {
+            title: 'Published At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) =>
+                <div>{moment(text).format("DD/MM/YYYY hh:mm A")}</div>
         },
         {
             title: 'Action',
@@ -203,11 +211,14 @@ const Blogs = () => {
                 <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>Add Blogs</Button>
             </div>
 
-            <div className="my-10 max-h-[550px] overflow-hidden overflow-y-auto xl:max-h-[650px]">
+            <div className="my-10">
                 <Table
                     columns={columns}
                     dataSource={newsLetterList}
-                    scroll={{ x: 'max-content' }}
+                    scroll={{
+                        x: 'max-content',
+                        y: 'calc(100vh - 400px)',
+                    }}
                 />
             </div>
 

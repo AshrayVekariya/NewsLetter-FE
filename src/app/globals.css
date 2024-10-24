@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.ql-editor{
+.ql-editor {
     min-height: 200px !important;
+}
+
+.ant-table-body::-webkit-scrollbar {
+    width: 10px;
+    scroll-behavior: smooth;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    scroll-behavior: smooth;
+}
+
+.ant-table-body {
+    scrollbar-width: thin;
+    scrollbar-color: #c4c4c4 transparent;
+    scroll-behavior: smooth;
 }
